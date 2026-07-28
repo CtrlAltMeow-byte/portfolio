@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Name — Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0d1117;
+    --bg-raised: #12181f;
+    --text: #e8e6e1;
+    --text-dim: #8b96a3;
+    --border: #232b34;
+    --accent: #5ec8b8;
+    --accent-dim: #3a7d74;
+    --tag: #e0a458;
+    --radius: 3px;
+  }
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{ color: var(--accent); text-decoration: none; }
+  a:hover{ text-decoration: underline; }
+  ::selection{ background: var(--accent-dim); color: #fff; }
+
+  .mono{ font-family: 'IBM Plex Mono', monospace; }
+
+  /* ===== Nav ===== */
+  nav{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(13,17,23,0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner{
+    max-width: 860px; margin: 0 auto;
+    padding: 16px 24px;
+    display:flex; justify-content: space-between; align-items:center;
+  }
+  .nav-inner .logo{ font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:15px; color: var(--text); }
+  .logo .dot{ color: var(--accent); }
+  .nav-links{ display:flex; gap: 24px; font-family:'IBM Plex Mono', monospace; font-size:13px; }
+  .nav-links a{ color: var(--text-dim); }
+  .nav-links a:hover{ color: var(--accent); text-decoration:none; }
+
+  /* ===== Hero / terminal ===== */
+  .hero{ max-width: 860px; margin: 0 auto; padding: 80px 24px 60px; }
+  .terminal{
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  }
+  .terminal-bar{
+    display:flex; align-items:center; gap:8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .terminal-bar span{ width:11px; height:11px; border-radius:50%; display:inline-block; }
+  .terminal-bar span:nth-child(1){ background:#5f6368; }
+  .terminal-bar span:nth-child(2){ background:#5f6368; }
+  .terminal-bar span:nth-child(3){ background:#5f6368; }
+  .terminal-title{ margin-left: 8px; font-size:12px; color: var(--text-dim); font-family:'IBM Plex Mono',monospace; }
+  .terminal-body{ padding: 28px 28px 32px; font-family:'IBM Plex Mono', monospace; font-size:15px; }
+  .term-line{ color: var(--text-dim); }
+  .term-line .prompt{ color: var(--accent); }
+  .term-out{ margin-top: 14px; }
+  .name-line{ font-size: 30px; font-weight:700; color: var(--text); margin-top:2px; }
+  .role-line{ color: var(--accent); font-size:16px; margin-top:6px; }
+  .desc-line{ color: var(--text-dim); font-size:14px; margin-top:14px; max-width: 520px; }
+  .cursor{
+    display:inline-block; width:8px; height:18px; background: var(--accent);
+    margin-left:4px; vertical-align: -3px;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .hero-links{ display:flex; gap:16px; margin-top: 22px; font-family:'IBM Plex Mono', monospace; font-size:13px; }
+  .hero-links a{ color: var(--text-dim); border:1px solid var(--border); padding:6px 12px; border-radius: var(--radius); }
+  .hero-links a:hover{ color: var(--accent); border-color: var(--accent-dim); text-decoration:none; }
+
+  /* ===== Section headers ===== */
+  section{ max-width: 860px; margin: 0 auto; padding: 10px 24px 70px; }
+  .section-head{
+    display:flex; align-items:baseline; gap: 12px; margin-bottom: 28px;
+  }
+  .section-head .tag{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color: var(--bg);
+    background: var(--accent); padding: 2px 8px; border-radius: var(--radius); font-weight:600;
+  }
+  .section-head h2{ font-size: 20px; font-weight:600; }
+  .section-head .rule{ flex:1; height:1px; background: var(--border); }
+
+  /* ===== Changelog / projects ===== */
+  .entry{
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-raised);
+    padding: 22px 24px;
+    margin-bottom: 18px;
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .entry:hover{ border-color: var(--accent-dim); transform: translateY(-2px); }
+  .entry-top{ display:flex; justify-content:space-between; align-items:flex-start; gap: 16px; flex-wrap: wrap; }
+  .entry-version{ font-family:'IBM Plex Mono', monospace; color: var(--accent); font-size:13px; font-weight:600; }
+  .entry-title{ font-size:17px; font-weight:600; margin-top:4px; }
+  .entry-date{ font-family:'IBM Plex Mono', monospace; font-size:12px; color: var(--text-dim); white-space:nowrap; }
+  .entry-desc{ color: var(--text-dim); font-size:14px; margin-top:10px; max-width: 640px; }
+  .entry-stack{ display:flex; gap:8px; flex-wrap:wrap; margin-top: 14px; }
+  .chip{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; color: var(--tag);
+    border: 1px solid rgba(224,164,88,0.35); padding: 3px 9px; border-radius: 100px;
+  }
+  .entry-links{ margin-top: 16px; display:flex; gap: 18px; font-family:'IBM Plex Mono', monospace; font-size:12.5px; }
+
+  /* ===== Skills ===== */
+  .skills-grid{
+    display:grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+    gap: 14px;
+  }
+  .skill-cat{
+    border:1px solid var(--border); border-radius:6px; padding:16px 18px; background: var(--bg-raised);
+  }
+  .skill-cat .cat-label{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color: var(--accent); letter-spacing:.04em; }
+  .skill-cat ul{ list-style:none; margin-top:10px; font-size: 13.5px; color: var(--text-dim); }
+  .skill-cat li{ padding: 3px 0; }
+  .skill-cat li::before{ content:"›"; color: var(--text-dim); margin-right:6px; }
+
+  /* ===== Contact / footer ===== */
+  footer{
+    max-width: 860px; margin: 0 auto; padding: 40px 24px 60px;
+    border-top: 1px solid var(--border);
+    text-align:center;
+  }
+  footer .mono{ color: var(--text-dim); font-size: 13px; }
+  footer .contact-links{ margin-top: 14px; display:flex; justify-content:center; gap: 20px; font-family:'IBM Plex Mono',monospace; font-size:13px; }
+
+  @media (max-width: 600px){
+    .name-line{ font-size:24px; }
+    .terminal-body{ padding: 20px; }
+    .nav-links{ gap:14px; font-size:12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">Student First Name<span class="dot">.</span>dev</div>
+    <div class="nav-links">
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span></span><span></span><span></span>
+      <span class="terminal-title">whoami.sh</span>
+    </div>
+    <div class="terminal-body">
+      <div class="term-line"><span class="prompt">$</span> whoami</div>
+      <div class="term-out">
+        <div class="name-line">Student Name</div>
+        <div class="role-line">Backend &amp; Systems Engineer</div>
+        <div class="desc-line">
+          I build reliable, fast infrastructure — APIs, data pipelines, and the boring-but-critical
+          plumbing that keeps products running at 3am. Currently focused on distributed systems and developer tooling.
+          <span class="cursor"></span>
+        </div>
+      </div>
+      <div class="hero-links">
+        <a href="#projects">view projects →</a>
+        <a href="/resume.pdf">resume.pdf</a>
+        <a href="mailto:student@example.com">say hello</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="projects">
+  <div class="section-head">
+    <span class="tag">01</span>
+    <h2>Project Log</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-top">
+      <div>
+        <div class="entry-version">v3.2.0</div>
+        <div class="entry-title">Streamline — Event-Driven Job Queue</div>
+      </div>
+      <div class="entry-date">2026</div>
+    </div>
+    <p class="entry-desc">
+      A lightweight, Redis-backed job queue built for high-throughput background processing.
+      Handles retries, dead-letter queues, and priority scheduling out of the box. Used in production
+      to process ~2M jobs/day.
+    </p>
+    <div class="entry-stack">
+      <span class="chip">Go</span>
+      <span class="chip">Redis</span>
+      <span class="chip">Docker</span>
+      <span class="chip">gRPC</span>
+    </div>
+    <div class="entry-links">
+      <a href="#">live demo →</a>
+      <a href="#">source code →</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-top">
+      <div>
+        <div class="entry-version">v1.4.0</div>
+        <div class="entry-title">Ledger — Personal Finance API</div>
+      </div>
+      <div class="entry-date">2025</div>
+    </div>
+    <p class="entry-desc">
+      REST API for tracking transactions across accounts, with automatic categorization and monthly
+      reports generated via a scheduled worker. Built with a focus on clean schema design and query performance.
+    </p>
+    <div class="entry-stack">
+      <span class="chip">Python</span>
+      <span class="chip">FastAPI</span>
+      <span class="chip">PostgreSQL</span>
+    </div>
+    <div class="entry-links">
+      <a href="#">live demo →</a>
+      <a href="#">source code →</a>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-top">
+      <div>
+        <div class="entry-version">v1.0.0</div>
+        <div class="entry-title">Waypoint — CLI Deployment Tool</div>
+      </div>
+      <div class="entry-date">2024</div>
+    </div>
+    <p class="entry-desc">
+      A command-line tool that simplifies deploying containerized apps to small VPS instances —
+      config-as-code with a single YAML file and zero-downtime rolling restarts.
+    </p>
+    <div class="entry-stack">
+      <span class="chip">Rust</span>
+      <span class="chip">SSH</span>
+      <span class="chip">systemd</span>
+    </div>
+    <div class="entry-links">
+      <a href="#">source code →</a>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-head">
+    <span class="tag">02</span>
+    <h2>Stack</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-cat">
+      <div class="cat-label">LANGUAGES</div>
+      <ul><li>Go</li><li>Python</li><li>TypeScript</li><li>Rust</li></ul>
+    </div>
+    <div class="skill-cat">
+      <div class="cat-label">INFRASTRUCTURE</div>
+      <ul><li>Docker</li><li>Kubernetes</li><li>AWS</li><li>Terraform</li></ul>
+    </div>
+    <div class="skill-cat">
+      <div class="cat-label">DATA</div>
+      <ul><li>PostgreSQL</li><li>Redis</li><li>Kafka</li></ul>
+    </div>
+    <div class="skill-cat">
+      <div class="cat-label">TOOLING</div>
+      <ul><li>Git</li><li>CI/CD</li><li>Grafana</li></ul>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="mono">$ curl -X POST /contact --data "let's build something"</div>
+  <div class="contact-links">
+    <a href="mailto:alex@example.com">email</a>
+    <a href="#">github</a>
+    <a href="#">linkedin</a>
+  </div>
+</footer>
+
+</body>
+</html>
