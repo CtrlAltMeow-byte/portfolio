@@ -11,8 +11,8 @@ URL = "https://data.kcmo.org/resource/d4px-6rwg.json"
 def main():
     print("Building test project")
 
-    """
-    Milestone 1: Fetch 311 Call Center Issues data from the API and print the first 2 records.
+    
+    #Milestone 1: Fetch 311 Call Center Issues data from the API and print the first 2 records.
     data = fetch_311_requests(limit=2)
     if not data:
         print("❌ No data returned from API. Aborting pipeline steps.") 
@@ -20,7 +20,7 @@ def main():
     print(f"Successfully fetched {len(data)} records:")
     print(data)
 
-    """
+    
       
     
         
