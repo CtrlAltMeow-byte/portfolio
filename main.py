@@ -23,7 +23,7 @@ def main():
     # and handle any potential errors (e.g., network issues, invalid responses) gracefully.
     # Limit the number of records fetched to 1000 for testing purposes.
     '''
-    Basic testor.... Remove later
+    Basic testor.... Remove later - Good for Milestone 2 testing 
 
     data = fetch_311_data(limit=2)
     if not data:
@@ -40,6 +40,7 @@ def main():
     # Step 1: Minimal Working App First
     st.title("Kansas City 311 Requests Dashboard")
     st.caption(f"Data ranges from {df['open_date_time'].min().date()} to {df['open_date_time'].max().date()}")
+    st.caption(f"Total records: {len(df)}")
     issue_type = st.selectbox("Select Issue Type", df["issue_type"].unique())
     filtered = df[df["issue_type"] == issue_type]
     st.caption(f"Displaying {len(filtered)} records for issue type: {issue_type}")
@@ -57,7 +58,7 @@ def main():
 # Milestone 4: Step 2 Cache the Expensive Part
 @st.cache_data
 # This function is required so that the data is only fetched once per session, improving performance and reducing API calls.
-def load_data(limit=1000):
+def load_data(limit=5000):
     # Milestone 3: Data Cleaning with Pandas
 
     # Step 1: Load JSON into a DataFrame and inspect its shape/dtypes
@@ -66,7 +67,7 @@ def load_data(limit=1000):
     if not data:
         print("❌ No data returned from API. Aborting pipeline steps.")
         return
-
+    
     df = pd.DataFrame(data)
 
     print()
@@ -150,19 +151,23 @@ def load_data(limit=1000):
     return df
 
 
-def fetch_311_data(limit=1000):
+def fetch_311_data(limit=5000):
     # To only pull data from the last 2 years, calculate the cutoff date and use it
     # as a $where filter in the API request (Socrata-style query).
-    two_years_ago = (datetime.now() - timedelta(days=2 * 365)).strftime("%Y-%m-%dT%H:%M:%S")
+    #two_years_ago = (datetime.now() - timedelta(days=2 * 365)).strftime("%Y-%m-%dT%H:%M:%S")
+    #try:
+    #    response = requests.get(
+    #        URL,
+    #        params={
+    #           "$limit": limit,
+    #            "$where": f"open_date_time >= '{two_years_ago}'",
+    #       },
+    #       timeout=10,
+    #   )
+    #    response.raise_for_status()
+    #    return response.json()
     try:
-        response = requests.get(
-            URL,
-            params={
-                "$limit": limit,
-                "$where": f"open_date_time >= '{two_years_ago}'",
-            },
-            timeout=10,
-        )
+        response = requests.get(URL, params={"$limit": limit}, timeout=10)
         response.raise_for_status()
         return response.json()
     except requests.exceptions.Timeout:
