@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 import requests  # Milestone 1
 import pandas as pd  # Milestone 2
-import streamlit as st
+import streamlit as st # Milestone 4
 
 URL = "https://data.kcmo.org/resource/d4px-6rwg.json"
 
